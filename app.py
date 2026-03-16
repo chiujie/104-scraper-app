@@ -6,9 +6,13 @@ import io
 import time
 import urllib.parse
 import re
+import urllib3 # 🌟 新增：用來處理憑證警告
+
+# 🌟 新增：關閉「不安全連線」的警告訊息，讓畫面保持乾淨
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 st.set_page_config(page_title="職缺爬蟲小工具", page_icon="🔍")
-st.title("🚀 1111 職缺爬蟲與下載器")
+st.title("🚀 1111 職缺爬蟲與下載器 (略過憑證版)")
 st.write("只要輸入關鍵字，就能自動爬取 1111 人力銀行的職缺並下載成 Excel。")
 
 # 輸入區塊
@@ -32,7 +36,8 @@ if st.button("開始爬蟲"):
                 url = f"https://www.1111.com.tw/search/job?ks={encoded_keyword}&page={page}"
                 
                 try:
-                    res = requests.get(url, headers=headers)
+                    # 🌟 關鍵修改：加入 verify=False 強制略過 SSL 憑證檢查
+                    res = requests.get(url, headers=headers, verify=False)
                     res.raise_for_status()
                     soup = BeautifulSoup(res.text, 'html.parser')
                     
