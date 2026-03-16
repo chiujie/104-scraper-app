@@ -77,4 +77,6 @@ if st.button("開始爬蟲"):
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
             else:
-                st.warning("還是沒有找到職缺！可能是 104 的防爬蟲機制阻擋了 Streamlit 雲端主機的 IP。
+                st.warning("還是沒有找到職缺！可能是 104 的防爬蟲機制阻擋了 Streamlit 雲端主機的 IP。")
+    else:
+        st.error("請先輸入關鍵字！")
